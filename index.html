@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>✨</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+
+body{
+height:100vh;
+overflow:hidden;
+color:white;
+text-align:center;
+padding-bottom:80px;
+
+background:linear-gradient(-45deg,#ff00cc,#3333ff,#00ffcc,#000);
+background-size:400% 400%;
+animation:gradientMove 8s ease infinite;
+}
+
+/* glow */
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:radial-gradient(circle at bottom,#7c4dff22,transparent 60%),
+radial-gradient(circle,#7c4dff22,transparent 40%);
+animation:moveBg 8s infinite alternate;
+z-index:-2;
+}
+
+@keyframes moveBg{
+0%{transform:translate(0,0);}
+100%{transform:translate(30px,20px);}
+}
+
+@keyframes gradientMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+h1{
+font-size:3rem;
+margin-top:20px;
+background:linear-gradient(90deg,#00e5ff,#7c4dff,#00ff85);
+-webkit-background-clip:text;
+background-clip:text;
+color:rgb(red, green, blue);
+}
+
+button{
+margin:8px;
+padding:10px 18px;
+border:none;
+border-radius:25px;
+cursor:pointer;
+background:linear-gradient(90deg,#00e5ff,#7c4dff);
+color:white;
+font-weight:bold;
+}
+
+.card{
+margin:20px auto;
+padding:15px;
+width:90%;
+max-width: 650px;
+min-height:80px;
+background:rgba(255,255,255,0.06);
+border:1px solid rgba(255,255,255,0.1);
+border-radius:15px;
+backdrop-filter:blur(10px);
+}
+
+.gallery{
+display:flex;
+overflow-x:auto;
+gap:10px;
+padding:10px;
+}
+
+.gallery img,.gallery video{
+width:150px;
+height:100px;
+object-fit:cover;
+border-radius:10px;
+cursor:pointer;
+}
+
+canvas{
+position:fixed;
+top:0;left:0;
+z-index:-1;
+}
+
+/* STAR CURSOR */
+.star{
+position:fixed;
+color:#edff2e;
+font-size:12px;
+pointer-events:none;
+animation:fade 1s linear forwards;
+}
+
+@keyframes fade{
+to{transform:scale(2.5) rotate(180deg);opacity:0;}
+}
+
+/* VIEWER */
+#viewer{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.92);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:999;
+flex-direction:column;
+}
+
+#mediaBox{
+max-width:90%;
+max-height:80%;
+transition:transform 0.2s;
+}
+
+#viewer img,#viewer video{
+max-width:100%;
+max-height:100%;
+border-radius:12px;
+}
+
+.zoomBtns button{
+padding:8px 12px;
+}
+.ticker{
+position:fixed;
+bottom:0;
+width:100%;
+background:rgba(0,0,0,0.35);
+color:white;
+padding:5px;
+z-index:50;
+}
+/* LOCK */
+#lockScreen{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.95);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:99999;
+}
+
+.lockBox{
+background:rgba(255,255,255,0.08);
+padding:25px;
+border-radius:15px;
+width:280px;
+}
+
+.lockBox input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+border:none;
+text-align:center;
+}
+
+#errorMsg{
+color:#ff4d4d;
+margin-top:8px;
+font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOCK -->
+<div id="lockScreen">
+  <div class="lockBox">
+    <h2>🔐 Enter Your Name</h2>
+    <input type="text" id="nameInput" placeholder="Type your name..." />
+    <button onclick="unlockSite()">Unlock ✨</button>
+    <p id="errorMsg"></p>
+  </div>
+</div>
+
+<h1><i>✨ Happy Birthday Our Cutie Pie ✨</i></h1>
+
+<button onclick="burst()">🎆 Surprise</button>
+<button onclick="showMem()">🧠 Memories</button>
+<button onclick="showWish()">✨ What You Deserve</button>
+<button onclick="toggleMusic()">Volume Up🎶🎶</button>
+
+<div class="card" id="box"></div>
+
+<div class="card">
+<h3>📸 Gallery</h3>
+<div class="gallery">
+<img src="/friend1.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend2.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend3.jpeg" onclick="openMedia(this.src,'image')">
+<video src="/video3.mp4"></video>
+<img src="/friend4.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend5.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend6.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend7.jpeg" onclick="openMedia(this.src,'image')">
+<video src="/video5.mp4"></video>
+<img src="/friend8.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend9.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend10.jpeg" onclick="openMedia(this.src,'image')">
+<video src="/video7.mp4"></video>
+<img src="/friend11jpeg.jpeg" onclick="openMedia(this.src,'image')">
+<video src="/video15.mp4"></video>
+<img src="/friend12.jpeg" onclick="openMedia(this.src,'image')">
+<video src="/video8.mp4"></video>
+<img src="/friend13.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend14.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend15.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend16.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend17.jpeg" onclick="openMedia(this.src,'image')">
+<video src="/video3.mp4"></video>
+<img src="/friend18.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend19.jpeg" onclick="openMedia(this.src,'image')">
+<img src="/friend20.jpeg" onclick="openMedia(this.src,'image')">
+
+
+
+</div>
+</div>
+
+<audio id="music" loop>
+<source src="audio.birthday.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="c"></canvas>
+
+<div id="viewer" onclick="closeViewer()">
+<div id="mediaBox"></div>
+<div class="zoomBtns">
+<button onclick="zoomIn(event)">➕</button>
+<button onclick="zoomOut(event)">➖</button>
+</div>
+</div>
+<div class="ticker">
+<marquee behavior="scroll" direction="left">
+💖 You are special ✨ | Life feels lighter and brighter when we are together ✨| 🌙 Stay blessed always |Thank you for being there for me 🌿| 💫 No distance, no time can ever reduce what you mean to me 🤍
+ | 🎀 Pure bond, pure vibes | 🌸 Happiness looks good on you | You’re not just my best friend, you’re my chosen family 💫 | You’re the kind of person people pray to have in their life 💛 | Life gave me many things, but you are my favorite blessing ✨ | Even on my worst days, you make everything feel okay 💫 | You’re my constant in a world that never stops changing 🤍 | You’re the reason so many of my memories are my favorites 🌷 | No matter what happens, I know I have you—and that’s enough 🌸
+</marquee>
+</div>
+<script>
+let music=document.getElementById("music");
+let mediaBox=document.getElementById("mediaBox");
+let scale=1;
+let mediaEl=null;
+
+/* MUSIC */
+function toggleMusic(){
+if(music.paused) music.play().catch(()=>{});
+else music.pause();
+}
+
+/* MEMORIES */
+const memories=["Late night laughter🌙","Making plans🤝📍","Sharing reels🎀","Recomending each other's series and movies 🎬","Celebrating eid together ❤️","sharing opinions on reads & watches📚🎬💬","Roasting each other🔥😂","Unexpected joy 💫","endless conversation💬♾️","laughing at silly things🫀","Sharing secrets💬","gol gappy parties😋❤️","exchanging book recommendations📚"];
+const wishes=["May Allah always keep you safe, happy, and surrounded by peace 🤍","May your life glow endlessly🌷","Stars feel closer when you exist","May Allah place barakah in your time, effort, and every little step 🌸","May every hardship turn into ease and every tear into joy 🌷","May you never feel alone and always feel loved and valued 💫","May our bond always stay strong, pure, and blessed ✨","May Allah bless you with barakah in everything you do 🌙","May all your prayers be accepted and your dreams come true 🌸","May your heart never lose its softness, no matter how hard life gets ✨","May you never feel alone and always feel loved and valued 💫","May you be protected from what breaks you and guided to what heals you🌿","May every delay in your life turn out to be divine protection 🌙","May you get all the best💛","May we remain friends in this world and reunited in Jannah 🤍"];
+
+function showMem(){
+document.getElementById("box").innerText =
+memories[Math.floor(Math.random()*memories.length)];
+}
+
+function showWish(){
+document.getElementById("box").innerText =
+wishes[Math.floor(Math.random()*wishes.length)];
+}
+
+/* MEDIA */
+function openMedia(src,type){
+document.getElementById("viewer").style.display="flex";
+scale=1;
+
+if(type==="image"){
+mediaBox.innerHTML=`<img src="${src}" id="media">`;
+}else{
+mediaBox.innerHTML=`<video src="${src}" controls autoplay id="media"></video>`;
+}
+
+mediaEl=document.getElementById("media");
+}
+
+function closeViewer(){
+document.getElementById("viewer").style.display="none";
+mediaBox.innerHTML="";
+mediaEl=null;
+}
+
+function zoomIn(e){
+e.stopPropagation();
+if(!mediaEl) return;
+scale+=0.1;
+mediaEl.style.transform=`scale(${scale})`;
+}
+
+function zoomOut(e){
+e.stopPropagation();
+if(!mediaEl) return;
+scale=Math.max(0.5,scale-0.1);
+mediaEl.style.transform=`scale(${scale})`;
+}
+
+/* FIREWORKS */
+const canvas=document.getElementById("c");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+let particles=[];
+
+function burst(){
+for(let i=0;i<120;i++){
+particles.push({
+x:canvas.width/2,
+y:canvas.height/2,
+vx:(Math.random()-0.5)*10,
+vy:(Math.random()-0.5)*10,
+alpha:1
+});
+}
+}
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.25)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+particles.forEach((p,i)=>{
+ctx.fillStyle=`rgba(0,229,255,${p.alpha})`;
+ctx.fillRect(p.x,p.y,3,3);
+
+p.x+=p.vx;
+p.y+=p.vy;
+p.vy+=0.05;
+p.alpha-=0.01;
+
+if(p.alpha<=0)particles.splice(i,1);
+});
+
+requestAnimationFrame(draw);
+}
+draw();
+
+/* STAR EFFECT */
+window.addEventListener("mousemove",(e)=>{
+let s=document.createElement("div");
+s.className="star";
+s.innerHTML="✦";
+s.style.left=e.pageX+"px";
+s.style.top=e.pageY+"px";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),800);
+});
+
+/* FIX VIDEO CLICK */
+document.querySelectorAll("video").forEach(v=>{
+v.addEventListener("click",()=>{
+openMedia(v.src,"video");
+});
+});
+
+/* UNLOCK */
+function unlockSite(){
+let name = document.getElementById("nameInput").value.trim();
+
+if(name === ""){
+document.getElementById("errorMsg").innerText = "Please enter your name 💖";
+return;
+}
+
+if(name.toLowerCase() === "chuzi"){
+
+// 🔓 unlock screen
+document.getElementById("lockScreen").style.display = "none";
+
+// 🎆 FIREWORKS (YOUR ORIGINAL EFFECT KEPT)
+for(let i = 0; i < 8; i++){
+setTimeout(()=>burst(), i * 500);
+}
+
+// 💥 SURPRISE MESSAGE
+setTimeout(()=>{
+document.getElementById("box").innerText =
+"🎉 SURPRISE!!! Welcome to our universe ✨";
+}, 800);
+
+// clear error (extra safety, NOT removing anything)
+document.getElementById("errorMsg").innerText = "";
+
+}else{
+document.getElementById("errorMsg").innerText = "Wrong name ❌ Try again";
+}
+}
+</script>
+
+</body>
+</html>
